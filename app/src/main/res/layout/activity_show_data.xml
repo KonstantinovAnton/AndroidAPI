@@ -6,50 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".ShowData">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="372dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="36dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_bottom_bar" />
-
     <ListView
         android:id="@+id/listview1"
-        android:layout_width="325dp"
-        android:layout_height="504dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="349dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-    <LinearLayout
-        android:id="@+id/layout_bottom_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="40dp"
-        android:background="#222222"
-        android:clickable="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="5dip"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="206dp"
+        android:layout_height="99dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <Button
-            android:id="@+id/button1"
+
+        <RadioButton
+            android:id="@+id/btnSortFname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#000000"
-            android:gravity="center"
-            android:padding="5dip"
-            android:text="Неподвижная часть"
-            android:textColor="#FFFFFF" />
+            android:text="По имени" />
 
-    </LinearLayout>
+        <RadioButton
+            android:id="@+id/btnSortLname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="По фамилии" />
+    </RadioGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,19 +4,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
 
-public class ShowData extends AppCompatActivity {
+public class ShowData extends AppCompatActivity implements View.OnClickListener{
 
-
+    RadioButton btnSortFnmae;
+    RadioButton btnSortLname;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -25,6 +30,7 @@ public class ShowData extends AppCompatActivity {
     }
 
     TextView tvPersonId, tvFname, tvLname;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,18 +42,29 @@ public class ShowData extends AppCompatActivity {
         tvFname = findViewById(R.id.tvFname);
         tvLname = findViewById(R.id.tvLname);
 
-        GetList();
+
+        btnSortFnmae = findViewById(R.id.btnSortFname);
+        btnSortFnmae.setOnClickListener(this);
+
+        btnSortLname = findViewById(R.id.btnSortLname);
+        btnSortLname.setOnClickListener(this);
+
+
+        GetList("select * from Persons");
 
 
     }
 
     SimpleAdapter ad;
-    public void GetList()
+
+
+
+    public void GetList(String qu)
     {
         ListView lstv = (ListView) findViewById(R.id.listview1);
         List<Map<String, String>> MyDataList = null;
         ListItem MyData = new ListItem();
-        MyDataList = MyData.getList();
+        MyDataList = MyData.getList(qu);
 
         String[] Fromw = {"id_person", "fname", "lname"};
         int[] Tow = {R.id.tvPersonID, R.id.tvFname, R.id.tvLname};
@@ -55,5 +72,26 @@ public class ShowData extends AppCompatActivity {
         ad = new SimpleAdapter(ShowData.this, MyDataList, R.layout.listlayouttemplate, Fromw, Tow);
         lstv.setAdapter(ad);
     }
+
+    @Override
+    public void onClick(View view) {
+
+
+        switch (view.getId()) {
+
+            case R.id.btnSortLname:
+
+                GetList("select * from Persons order by lname");
+
+                break;
+            case R.id.btnSortFname:
+
+                GetList("select * from Persons order by fname");
+
+                break;
+        }
+    }
+
+
 
 }

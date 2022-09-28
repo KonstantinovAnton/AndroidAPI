@@ -1,5 +1,12 @@
 package com.example.mobile_task1;
 
+
+
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,12 +16,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListItem {
+
+
+public class ListItem{
     Connection connect;
     String ConnectionResult ="";
     Boolean isSuccess=false;
 
-    public List<Map<String,String>> getList(){
+
+    String qu ="select * from Persons";
+
+    public List<Map<String,String>> getList(String qu){
         List<Map<String,String>> data = null;
         data = new ArrayList<Map<String,String>>();
         try{
@@ -22,7 +34,7 @@ public class ListItem {
             connect = connectionHelper.connectionClass();
             if(connect != null)
             {
-                String qu = "select * from Persons";
+
                 Statement statement = connect.createStatement();
                 ResultSet resultSet = statement.executeQuery(qu);
                 while(resultSet.next())
@@ -45,5 +57,6 @@ public class ListItem {
         }
         return  data;
     }
+
 
 }
