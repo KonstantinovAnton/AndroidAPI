@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn = findViewById(R.id.btn);
+        btn = findViewById(R.id.btnNext);
         btn.setOnClickListener(this);
 
        tvID = findViewById(R.id.tvID);
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.btn:
+            case R.id.btnNext:
 
-                GetTextFromSql(view);
+                startActivity(new Intent(this, ShowData.class));
                 break;
         }
 
