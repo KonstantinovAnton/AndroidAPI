@@ -10,16 +10,15 @@ import android.widget.TextView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
 
-    Button btn;
+    Button btn, btnGoToAdd;
+
     Connection connection;
     String ConnectionResult = "";
 
@@ -32,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn = findViewById(R.id.btnNext);
         btn.setOnClickListener(this);
+
+        btnGoToAdd = findViewById(R.id.btnGoToAdd);
+        btnGoToAdd.setOnClickListener(this);
 
        tvID = findViewById(R.id.tvID);
        tvFname = findViewById(R.id.tvFname);
@@ -76,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
 
             case R.id.btnNext:
-
-
                 startActivity(new Intent(this, ShowData.class));
+                break;
+            case R.id.btnGoToAdd:
+                startActivity(new Intent(this, AddPerson.class));
                 break;
         }
 
