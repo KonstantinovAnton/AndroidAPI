@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <!--
     insert into Persons (imagePerson)
@@ -25,6 +26,7 @@
             android:id="@+id/tvChangePersonID"
             android:layout_width="276dp"
             android:layout_height="58dp"
+            android:textColor="@drawable/font_edittext"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -49,6 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="118dp"
             android:text="TextView"
+            android:textColor="@drawable/font_edittext"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/tvLname"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,6 +69,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="113dp"
             android:text="TextView"
+            android:textColor="@drawable/font_edittext"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

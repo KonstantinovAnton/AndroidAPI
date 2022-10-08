@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +18,7 @@ import java.sql.Statement;
 public class AddPerson extends AppCompatActivity implements View.OnClickListener {
 
     EditText edTextAddFname, edTextAddLname;
-    Button btnAdd, btnGoToMain;
+    Button btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,6 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
 
-        btnGoToMain = findViewById(R.id.btnGoToMain);
-        btnGoToMain.setOnClickListener(this);
     }
 
 
@@ -45,10 +44,10 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 String lname = edTextAddLname.getText().toString();
 
                 addPerson(view, fname, lname);
-                break;
-            case R.id.btnGoToMain:
+
                 startActivity(new Intent(this, MainActivity.class));
                 break;
+
         }
     }
 
@@ -66,6 +65,8 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
             stmt.close();
             connection.close();
             Log.w("Run: ", "Connection close!");
+
+            Toast.makeText(getBaseContext(),"Запись добавлена", Toast.LENGTH_SHORT).show();
         }
         catch (SQLException ex)
         {

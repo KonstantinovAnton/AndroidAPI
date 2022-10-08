@@ -4,67 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ShowData">
 
     <ListView
 
         android:id="@+id/listview1"
-        android:layout_width="338dp"
-        android:layout_height="432dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/etSearch"
+        android:layout_width="340dp"
+        android:layout_height="560dp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="206dp"
-        android:layout_height="99dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="291dp"
+        android:layout_height="69dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
             android:id="@+id/btnSortFname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="По имени" />
+            android:width="150dp"
+            android:text="По имени"
+            android:textColor="@drawable/font_edittext" />
 
         <RadioButton
             android:id="@+id/btnSortLname"
-            android:layout_width="wrap_content"
+            android:layout_width="159dp"
             android:layout_height="wrap_content"
-            android:text="По фамилии" />
+            android:text="По фамилии"
+            android:width="100dp"
+            android:textColor="@drawable/font_edittext" />
     </RadioGroup>
 
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@drawable/font_edittext_press"
         android:ems="10"
+        android:hint="Введите данные"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/btnSearch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@drawable/font_edittext_press"
+        android:textColorHint="@drawable/font_edittext"
+        app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+        app:layout_constraintHorizontal_bias="0.679"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:width="120dp"
+        android:background="@drawable/buttons"
+        android:text="поиск"
+        android:textColor="@drawable/font_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

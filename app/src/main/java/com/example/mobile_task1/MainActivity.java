@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnGoToAdd = findViewById(R.id.btnGoToAdd);
         btnGoToAdd.setOnClickListener(this);
 
-       tvID = findViewById(R.id.tvID);
-       tvFname = findViewById(R.id.tvFname);
-       tvLname = findViewById(R.id.tvLname);
-
-
     }
 
     public void GetTextFromSql(View v) {
