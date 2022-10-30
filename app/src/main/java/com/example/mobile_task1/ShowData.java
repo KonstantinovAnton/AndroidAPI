@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -16,112 +17,111 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ShowData extends AppCompatActivity implements View.OnClickListener{
+public class ShowData extends AppCompatActivity implements View.OnClickListener {
 
     RadioButton btnSortFnmae;
     RadioButton btnSortLname;
     Button btnSearch;
 
     EditText etSearch;
+
+    private Adapter pAdapter;
+    private List<Person> listProduct = new ArrayList<>();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_show_data);
-    }
 
-    TextView tvPersonId, tvFname, tvLname;
+        ListView ivProducts = findViewById(R.id.listview1);//Находим лист в который будем класть наши объекты
+        pAdapter = new Adapter(ShowData.this, listProduct); //Создаем объект нашего адаптера
+        ivProducts.setAdapter(pAdapter); //Cвязывает подготовленный список с адаптером
 
-    @SuppressLint("MissingInflatedId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_data);
-
-        tvPersonId = findViewById(R.id.tvChangePersonID);
-        tvFname = findViewById(R.id.tvFname);
-        tvLname = findViewById(R.id.tvLname);
-
-        btnSortFnmae = findViewById(R.id.btnSortFname);
-        btnSortFnmae.setOnClickListener(this);
-
-        btnSortLname = findViewById(R.id.btnSortLname);
-        btnSortLname.setOnClickListener(this);
-
-        btnSearch = findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(this);
-
-        etSearch = findViewById(R.id.etSearch);
-
-
-        ListView listView = findViewById(R.id.listview1);
-        List<String> list = GetList("select * from Persons");
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                tvFname = view.findViewById(R.id.tvFname);
-                String fname = tvFname.getText().toString();
-
-                tvLname = view.findViewById(R.id.tvLname);
-                String lname = tvLname.getText().toString();
-
-                tvPersonId = view.findViewById(R.id.tvChangePersonID);
-                String personID = tvPersonId.getText().toString();
-
-                Intent intent = new Intent(ShowData.this, ChangePerson.class);
-
-                intent.putExtra("fname", fname);
-                intent.putExtra("lname", lname);
-                intent.putExtra("personID", personID);
-
-                startActivity(intent);
-
-
-
-               // Toast.makeText(getBaseContext(),"Test Toast Short " + tvFname.getText().toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    SimpleAdapter ad;
-
-    public List GetList(String qu)
-    {
-        ListView lstv = (ListView) findViewById(R.id.listview1);
-        List<Map<String, String>> MyDataList = null;
-        ListItem MyData = new ListItem();
-        MyDataList = MyData.getList(qu);
-
-        String[] Fromw = {"id_person", "fname", "lname"};
-        int[] Tow = {R.id.tvChangePersonID, R.id.tvFname, R.id.tvLname};
-
-        ad = new SimpleAdapter(ShowData.this, MyDataList, R.layout.listlayouttemplate, Fromw, Tow);
-        lstv.setAdapter(ad);
-
-        return MyDataList;
+        new GetProducts().execute(); //Подключение к нашей API в отдельном потоке
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
 
             case R.id.btnSortLname:
-                GetList("select * from Persons order by lname");
+                //GetList("select * from Persons order by lname");
                 break;
             case R.id.btnSortFname:
-                GetList("select * from Persons order by fname");
+                // GetList("select * from Persons order by fname");
                 break;
             case R.id.btnSearch:
 
-                String searchData = etSearch.getText().toString();
-                GetList("select * from Persons where fname like '%" + searchData + "%' or lname like '%" + searchData + "%'");
+                //String searchData = etSearch.getText().toString();
+                // GetList("select * from Persons where fname like '%" + searchData + "%' or lname like '%" + searchData + "%'");
                 break;
         }
+    }
+
+    private class GetProducts extends AsyncTask<Void, Void, String> implements com.example.mobile_task1.GetProducts {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://ngknn.ru:55797/NGKNN/КонстантиновАС/api/Persons");//Строка подключения к нашей API
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //вызываем нашу API
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                /*
+                BufferedReader успрощает чтение текста из потока символов
+                InputStreamReader преводит поток байтов в поток символов
+                connection.getInputStream() получает поток байтов
+                */
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);//кладет строковое значение в потоке
+                }
+                return result.toString();
+
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONArray tempArray = new JSONArray(s);//преоброзование строки в json массив
+                for (int i = 0; i < tempArray.length(); i++) {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);//Преобразование json объекта в нашу структуру
+                    Person tempProduct = new Person(
+                            productJson.getInt("ID"),
+                            productJson.getString("fname"),
+                            productJson.getString("lname")
+                    );
+                    listProduct.add(tempProduct);
+                    pAdapter.notifyDataSetInvalidated();
+                }
+            } catch (Exception ignored) {
+
+
+            }
+        }
+
+        TextView tvPersonId, tvFname, tvLname;
+
+
+        SimpleAdapter ad;
+
     }
 }
